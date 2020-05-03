@@ -51,14 +51,21 @@ std::string CG_KeyDisplayName(Key key) {
 
 static int bindTeam;
 
-void CG_SetBindTeam(team_t team) {
+void CG_SetBindTeam( playerState_t *ps ) {
+    if ( ps->persistant[ PERS_SPECSTATE ] != SPECTATOR_NOT )
+    {
+        bindTeam = 3; // BIND_TEAM_SPECTATORS
+		return;
+	}
+
+	int team = ps->persistant[ PERS_TEAM ];
     switch (team) {
     case TEAM_NONE:
         bindTeam = 3; // BIND_TEAM_SPECTATORS
         break;
     case TEAM_HUMANS:
     case TEAM_ALIENS:
-        bindTeam = static_cast<int>(team);
+        bindTeam = team;
         break;
     default:
         Log::Warn("Invalid team %d", team);

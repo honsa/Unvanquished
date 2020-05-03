@@ -612,7 +612,7 @@ void CG_NotifyHooks()
 		{
 			trap_notify_onTeamChange( ps->persistant[ PERS_TEAM ] );
 
-			CG_SetBindTeam( static_cast<team_t>( ps->persistant[ PERS_TEAM ] ) );
+			CG_SetBindTeam( ps );
 
 			/* execute team-specific config files */
 			trap_Cvar_VariableStringBuffer( va( "cg_%sConfig", BG_TeamName( ps->persistant[ PERS_TEAM ] ) ), config, sizeof( config ) );
